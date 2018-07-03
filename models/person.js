@@ -7,7 +7,7 @@ var PersonSchema = new Schema(
             type: String,
             required: true
         },
-        friends: []
+        friends: [{ firstName: String, lastName: String }]
     }
 );
 
