@@ -33,13 +33,16 @@ var person = new personModel({
 });
 
 person.friends.push({ firstName: "Tom", lastName: "Guy" });
-// embedded doc
 
 person.save(function (err, model) {
     if (err) throw err;
     console.log("new author saved");
 });
 
+personModel.find({}, (err, data) => {
+    if (err) return handleError(err);
+    console.log(data);
+});
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
