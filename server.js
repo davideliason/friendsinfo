@@ -5,15 +5,17 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var dotenv = require('dotenv');
+var router = express.Router();
+
 // this needs to be initiated ASAP
 dotenv.config();
 // server
 var app = express();
 
 // routes
-app.get('/', function (req, res, next) {
-    res.send("hello world");
-});
+var index = require('./routes/index');
+var people = require('./routes/people');
+
 // mLab connection
 const MLAB_URI = process.env.MLAB_URI;
 // access models
@@ -38,6 +40,11 @@ person.save(function (err, model) {
 
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+// routes
+app.use('/', index);
+app.use('/people', people);
 
 var listener = app.listen(8888, function () {
     console.log('Listening on port ' + listener.address().port); //Listening on port 8888
