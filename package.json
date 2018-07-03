@@ -1,0 +1,34 @@
+{
+  "name": "friendsinfo",
+  "version": "0.1.0",
+  "description": "track friend info using node express mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davideliason/friendsinfo.git"
+  },
+  "keywords": [
+    "mogodb"
+  ],
+  "author": "David Eliason",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davideliason/friendsinfo/issues"
+  },
+  "homepage": "https://github.com/davideliason/friendsinfo#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.0"
+  }
+}
