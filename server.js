@@ -16,13 +16,26 @@ app.get('/', function (req, res, next) {
 });
 // mLab connection
 const MLAB_URI = process.env.MLAB_URI;
-
+// access models
+require("./models/person");
+var personModel = require('mongoose').model('Person');
 // mongoose --> mongoDB connection
 var mongoose = require('mongoose');
 mongoose.connect(MLAB_URI);
 mongoose.Promise = global.Promise;
 // Connection instance
 var db = mongoose.connection;
+
+var person = new personModel({
+    name: "Bob"
+});
+// embedded doc
+
+person.save(function (err, model) {
+    if (err) throw err;
+    console.log("new author saved");
+});
+
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
