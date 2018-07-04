@@ -21,6 +21,7 @@ const MLAB_URI = process.env.MLAB_URI;
 // access models
 require("./models/person");
 var personModel = require('mongoose').model('Person');
+var friendModel = require('mongoose').model('Friend');
 // mongoose --> mongoDB connection
 var mongoose = require('mongoose');
 mongoose.connect(MLAB_URI);
@@ -29,14 +30,22 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 
 var person = new personModel({
-    name: "Bob"
+    name: "Kimberly",
+    _id: new mongoose.Types.ObjectId()
 });
 
-person.friends.push({ firstName: "Tom", lastName: "Guy" });
-
-person.save(function (err, model) {
+person.save(function (err) {
     if (err) throw err;
-    console.log("new author saved");
+
+    var friend1 = new friendModel({
+        friendTo: person._id,
+        name: "Johnny"
+    });
+
+    friend1.save(function (err) {
+        if (err) return handleError(err);
+        console.log("friend saved");
+    });
 });
 
 personModel.find({}, (err, data) => {
@@ -46,6 +55,15 @@ personModel.find({}, (err, data) => {
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+friendModel.
+    findOne({
+        name: "Johnny"
+    }).
+    populate('friendTo').
+    exec((err, friend) => {
+        if (err) return handleError(err);
+        console.log(friend);
+    });
 
 // routes
 app.use('/', index);
