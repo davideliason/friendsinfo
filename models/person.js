@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var personSchema = new Schema(
+var personSchema = Schema(
     {
         name: {
             type: String,
@@ -12,7 +12,7 @@ var personSchema = new Schema(
     }
 );
 
-var friendSchema = new Schema(
+var friendSchema = Schema(
     {
         friendTo: { type: Schema.Types.ObjectId, ref: 'Person' },
         name: String,
