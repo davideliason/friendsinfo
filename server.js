@@ -1,27 +1,28 @@
 const express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var dotenv = require('dotenv');
-var router = express.Router();
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const router = express.Router();
 
 dotenv.config();
-var app = express();
+const app = express();
 
-var index = require('./routes/index');
+const index = require('./routes/index');
 app.use('/', index);
 
 // Mongoose and mLab Time!
 const MLAB_URI = process.env.MLAB_URI;
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.connect(MLAB_URI);
-var db = mongoose.connection;
+const db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log("we are connected to DB");
-
+    // Schema with one property
     var kittySchema = mongoose.Schema({
         name: String
     });
@@ -31,10 +32,14 @@ db.once('open', function () {
         console.log(greeting);
     }
     var Kitten = mongoose.model('Kitten', kittySchema);
+    // create a document
     var silence = new Kitten({
         name: "Silence"
     });
-    silence.speak();
+    silence.save((err, silence) => {
+        if (err) return console.error(err);
+        silence.speak();
+    });
 
 
 
